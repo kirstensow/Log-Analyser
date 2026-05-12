@@ -1,9 +1,10 @@
 # Log Analyser
 
-A Python tool that analyses server log files to detect suspicious activity 
-including failed login attempts and potential brute force attacks.
+A Python tool that automatically finds and analyses server log files to detect 
+suspicious activity including failed login attempts and potential brute force attacks.
 
 ## Features
+- Automatically finds and processes all .log files in the current directory
 - Extracts all failed login attempts with associated IP and username
 - Extracts all IP addresses from the log
 - Extracts all timestamps
@@ -13,7 +14,7 @@ including failed login attempts and potential brute force attacks.
 - Exports all findings to a text file
 
 ## How to Use
-1. Add your log file and name it `server.log`
+1. Place your `.log` files in the same folder as the script
 2. Run the script:
 ```bash
 python3 LogAnalyzer.py
