@@ -1,9 +1,5 @@
 import re
-
-#Open and read file
-with open ('server.log', 'r') as file:
-    contents = file.read()
-    print (contents)
+import os
 
 
 #Extractions with regex
@@ -94,11 +90,16 @@ def export (failed_match, ip_match, ip_counts, brute_force, time_match, error_ma
 
 
 
-
-
-failed_match = failed(contents)
-ip_match = ip(contents)
-time_match = time(contents)
-error_match = error(contents)
-ip_counts, brute_force = analysis(failed_match)
-export(failed_match, ip_match, ip_counts, brute_force, time_match, error_match)
+# Walk through current directory and find all .log files
+for foldername, subfolders, filenames in os.walk(os.getcwd()):
+    for filename in filenames:
+        if filename.endswith('.log'):  # only process .log files
+            # join folder path and filename to get full file path to open it
+            with open(os.path.join(foldername, filename), 'r') as file:
+                contents = file.read()
+            failed_match = failed(contents)
+            ip_match = ip(contents)
+            time_match = time(contents)
+            error_match = error(contents)
+            ip_counts, brute_force = analysis(failed_match)
+            export(failed_match, ip_match, ip_counts, brute_force, time_match, error_match)
