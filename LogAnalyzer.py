@@ -4,7 +4,7 @@ import re
 with open ('server.log', 'r') as file:
     contents = file.read()
     print (contents)
-print()
+
 
 #Extractions with regex
 
@@ -60,27 +60,45 @@ def analysis(failed_match):
 
 def export (failed_match, ip_match, ip_counts, brute_force, time_match, error_match):
     with open('LogAnalysis.txt', 'w') as file:
-        file.write('Failed Login Attempts:\n')
 
+        file.write('\nFailed Login Attempts:\n')
         for fails in failed_match:
           file.write(str(fails))
           file.write('\n')
 
-        file.write('IP Addresses:\n')
+
+        file.write('\nIP Addresses:\n')
         for items in ip_match:
             file.write(str(items))
             file.write('\n')
+
+
+        file.write('\nTimestamps:\n')
+        for items in time_match:
+            file.write(str(items))
+            file.write('\n')
+
+
+        file.write('\nError Codes:\n')
+        for codes in error_match:
+            file.write(str(codes))
+            file.write('\n')
+
+        file.write('\nFailed Logins per IP:\n')
+        for ip, count in ip_counts.items():
+            file.write(f'{ip}: {count}\n')
+
+        file.write('\nPossible Brute Force Attempts:\n')
+        for ip, count in brute_force.items():
+            file.write(f'{ip}: {count}\n')
 
 
 
 
 
 failed_match = failed(contents)
-failed(contents)
-ip(contents)
-time(contents)
-error(contents)
-ip_counts, brute_force = analysis(failed_match)
+ip_match = ip(contents)
 time_match = time(contents)
 error_match = error(contents)
-export (failed_match, ip_counts, brute_force, time_match, error_match)
+ip_counts, brute_force = analysis(failed_match)
+export(failed_match, ip_match, ip_counts, brute_force, time_match, error_match)
